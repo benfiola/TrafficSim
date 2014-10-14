@@ -21,6 +21,7 @@ public class Freeway {
     private Integer numLanes;
     private Integer length;
     private List<Lane> lanes;
+    private List<Car> cars;
 
     /*
         initialize this bad boy with the basics - our static values for the fields and an empty list of lanes
@@ -29,6 +30,8 @@ public class Freeway {
         this.numLanes = NUM_LANES;
         this.length = FREEWAY_LENGTH;
         this.lanes = new ArrayList<Lane>();
+        this.cars = new ArrayList<Car>();
+        this.cars.add(new Car(new Driver(0.0, 0.0), 0.0, 0.0, new LogicCoordinates(5, 0)));
         initLanes();
     }
 
@@ -48,4 +51,5 @@ public class Freeway {
     public Integer getNumLanes() { return this.numLanes; }
     public List<Lane> getLanes() { return this.lanes; }
     public Integer getLength() { return this.length; }
+    public List<Car> getCars() { return this.cars; }
 }

@@ -17,7 +17,6 @@ public class MainLogic {
         Currently we have the freeway we're simulating as well as the cars that are currently active on the freeway.
      */
     public Freeway freeway;
-    public List<Car> cars;
 
     protected MainLogic(){
         freeway = new Freeway();

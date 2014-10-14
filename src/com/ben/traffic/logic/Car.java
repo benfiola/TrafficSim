@@ -20,14 +20,16 @@ public class Car {
     private Double currentHeading;
     private Double currentAcceleration;
     private Double currentVelocity;
+    private LogicCoordinates currCoords;
 
-    public Car(Driver d, double startVel, double startHeading) {
+    public Car(Driver d, double startVel, double startHeading, LogicCoordinates currCoords) {
         this.driver = d;
         this.length = LENGTH;
         this.width = WIDTH;
         this.currentVelocity = startVel;
         this.currentHeading = startHeading;
         this.currentAcceleration = 0.0;
+        this.currCoords = currCoords;
     }
 
     /*
@@ -39,4 +41,5 @@ public class Car {
     public Double getCurrentAcceleration() { return this.currentAcceleration; }
     public Double getCurrentHeading() { return this.currentHeading; }
     public Double getCurrentVelocity() { return this.currentVelocity; }
+    public LogicCoordinates getCurrCoordinates() { return this.currCoords; }
 }
