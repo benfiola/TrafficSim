@@ -6,7 +6,17 @@ package com.ben.traffic.logic;
  * This class represents coordinates (in feet) of the logic portion of our simulation.
  * We want to separate our coordinates logically from our graphics component, because the graphics
  * coordinates can scale based upon screen size.  This should offer a single point of truth
- * for any location in our simulation.
+ * for any location in our simulation.  For lanes, the origin starts in the lower left hand corner,
+ * and coordinates generally identify a point central to a lane.
+ *
+ *
+ *     |      |    .    |
+ *     |      |    .    |
+ *     |      |    .    |
+ *     |      |    .    |
+ *     |      |    .    |
+ *     |
+ *     |_________________________
  */
 public class LogicCoordinates {
     private Integer x;
