@@ -4,6 +4,7 @@ import com.ben.traffic.exceptions.UninitializedConverterException;
 import com.ben.traffic.logic.Freeway;
 import com.ben.traffic.logic.Lane;
 import com.ben.traffic.logic.LogicCoordinates;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,8 @@ import java.awt.*;
  * into our graphics component
  */
 public class LogicToGraphicsConverter {
+    final static Logger LOG = Logger.getLogger(LogicToGraphicsConverter.class);
+
     private static LogicToGraphicsConverter instance;
     private FreewayCanvas panel;
     private Freeway freeway;

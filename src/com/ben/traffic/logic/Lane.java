@@ -1,5 +1,7 @@
 package com.ben.traffic.logic;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by Ben on 10/12/2014.
  * A Lane represents a pathway for traffic to navigate down.
@@ -9,6 +11,8 @@ package com.ben.traffic.logic;
  * the start and end points of the lanes.
  */
 public class Lane {
+    final static Logger LOG = Logger.getLogger(Lane.class);
+
     private LogicCoordinates startCoordinates;
     private LogicCoordinates endCoordinates;
     public static Integer WIDTH = 10;

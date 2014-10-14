@@ -1,5 +1,7 @@
 package com.ben.traffic.logic;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  * This represents a logical freeway consisting of a length and a variable number of lanes in which cars can travel down.
  */
 public class Freeway {
+    final static Logger LOG = Logger.getLogger(Freeway.class);
+
     /*
         These represent static values for freeway length and number of lanes.
         In the future, it'd be nice to customize these via the UI but let's not get ahead of ourselves.
@@ -22,17 +26,20 @@ public class Freeway {
     private Integer length;
     private List<Lane> lanes;
     private List<Car> cars;
+    private CarFactory factory;
 
     /*
         initialize this bad boy with the basics - our static values for the fields and an empty list of lanes
      */
     public Freeway() {
+
         this.numLanes = NUM_LANES;
         this.length = FREEWAY_LENGTH;
         this.lanes = new ArrayList<Lane>();
-        this.cars = new ArrayList<Car>();
-        this.cars.add(new Car(new Driver(0.0, 0.0), 0.0, 0.0, new LogicCoordinates(5, 0)));
         initLanes();
+
+        this.cars = new ArrayList<Car>();
+        this.factory = new CarFactory(this.lanes);
     }
 
     /*
@@ -43,6 +50,13 @@ public class Freeway {
             int centerX = ((x * Lane.WIDTH) + (Lane.WIDTH/2));
             this.lanes.add(new Lane(new LogicCoordinates(centerX, 0), new LogicCoordinates(centerX, this.length)));
         }
+    }
+
+    /*
+        we call this method from the simulation controller as needed to spawn cars.
+     */
+    public void spawnCar(){
+        this.factory.spawnCar();
     }
 
     /*
