@@ -1,6 +1,7 @@
 package com.ben.traffic.graphics;
 
 import com.ben.traffic.logic.*;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,8 @@ import java.util.List;
  * Created by Ben on 10/12/2014.
  */
 public class FreewayCanvas extends JPanel {
+    final static Logger LOG = Logger.getLogger(FreewayCanvas.class);
+
     private static BasicStroke BORDER = new BasicStroke(1.0f);
     private static float[] dash = {3.0f};
     private static BasicStroke DASHED = new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND, 10.0f, dash, 0.0f);

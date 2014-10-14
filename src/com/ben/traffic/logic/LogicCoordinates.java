@@ -1,5 +1,7 @@
 package com.ben.traffic.logic;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by Ben on 10/12/2014.
  *
@@ -19,6 +21,8 @@ package com.ben.traffic.logic;
  *     |_________________________
  */
 public class LogicCoordinates {
+    final static Logger LOG = Logger.getLogger(LogicCoordinates.class);
+
     private Integer x;
     private Integer y;
 

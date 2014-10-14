@@ -1,5 +1,7 @@
 package com.ben.traffic.graphics;
 
+import org.apache.log4j.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,8 @@ import java.awt.*;
  * Created by Ben on 10/12/2014.
  */
 public class SimulationContentPane extends JPanel {
+    final static Logger LOG = Logger.getLogger(SimulationContentPane.class);
+
     SimulationContentPaneCanvas canvas;
     SimulationContentPaneSideMenu menu;
 

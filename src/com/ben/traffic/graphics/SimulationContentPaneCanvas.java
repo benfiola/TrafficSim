@@ -1,6 +1,7 @@
 package com.ben.traffic.graphics;
 
 import com.ben.traffic.logic.MainLogic;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,8 @@ import java.awt.event.ActionListener;
  * Created by Ben on 10/12/2014.
  */
 public class SimulationContentPaneCanvas extends JPanel {
+    final static Logger LOG = Logger.getLogger(SimulationContentPaneCanvas.class);
+
     private FreewayCanvas freewayCanvas;
     private Timer animationTimer;
     private Integer animationSpeed = 10;

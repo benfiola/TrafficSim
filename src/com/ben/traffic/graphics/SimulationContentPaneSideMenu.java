@@ -1,5 +1,8 @@
 package com.ben.traffic.graphics;
 
+import com.ben.traffic.logic.MainLogic;
+import org.apache.log4j.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,6 +12,8 @@ import java.awt.event.MouseListener;
  * Created by Ben on 10/12/2014.
  */
 public class SimulationContentPaneSideMenu extends JPanel {
+
+    final static Logger LOG = Logger.getLogger(SimulationContentPaneSideMenu.class);
 
     JButton startButton;
     JButton stopButton;
@@ -64,6 +69,26 @@ public class SimulationContentPaneSideMenu extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             MainWindow.getSimulationCanvas().startAnimation();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {}
+
+        @Override
+        public void mouseReleased(MouseEvent e) {}
+
+        @Override
+        public void mouseEntered(MouseEvent e) {}
+
+        @Override
+        public void mouseExited(MouseEvent e) { }
+    }
+
+    private class SpawnButtonMouseListener implements MouseListener
+    {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            MainLogic.getFreeway().spawnCar();
         }
 
         @Override

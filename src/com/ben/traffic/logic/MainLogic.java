@@ -1,5 +1,7 @@
 package com.ben.traffic.logic;
 
+import org.apache.log4j.Logger;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,8 @@ import java.util.List;
  * If we want to access anything related to the logic component of the simulation, we should do so through here.
  */
 public class MainLogic {
+    final static Logger LOG = Logger.getLogger(MainLogic.class);
+
     /*
         We make this class a singleton - there's no way we're going to deal with more than one concurrent simulation
      */
