@@ -1,9 +1,14 @@
-package net.qial.sim.traffic;
+package net.qial.sim.traffic.structures;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class SkipList<E> {
+// Abstract so that we can define different styles of skip lists.
+// For traffic patterns, a skiplist where higher levels are mostly 
+//   individual exits/intersections.
+// Possibly a new datastructure to handle multi-line roads. Like a
+//   multi-dimensional skip list?
+public abstract class SkipList<E> {
 	// base skip list idea to test traffic things
 	private List<Node<E>> lists;
 	private int levels = 0;
@@ -11,6 +16,9 @@ public class SkipList<E> {
 	public SkipList() {
 		lists = new LinkedList<Node<E>>();
 	}
+	
+	// Should E extend Comparable so that we can natively sort them without caring about values?
+	public abstract void add(E object, Double value);
 	
 	class Node<E> {
 		private Double value;
