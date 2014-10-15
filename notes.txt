@@ -1,0 +1,11 @@
+Basic idea:
+
+Cars change their state according to a differential equation.
+Mainly this is speed x time, but if they accelerate/decelerate
+then it can change.
+
+The model of the road itself can be considered a doubly linked
+list, where each car links to the car in front and behind.
+Skip list style markers for certain road indicators like lane
+addition or removal or onramps/offramps can speed up calculation
+time if needed.
