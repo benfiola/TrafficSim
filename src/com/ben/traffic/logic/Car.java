@@ -71,6 +71,10 @@ public class Car {
         this.currentVelocity = this.currentVelocity + (this.currentAcceleration * timeDifferential);
         this.currTime = nextTime;
     }
+    
+    public void calculateDriverChanges() {
+    	
+    }
 
     /*
         Accessor methods for the fields we need.

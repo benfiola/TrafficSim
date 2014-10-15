@@ -19,7 +19,12 @@ public class CarFactory {
     /*this will provide random colors we can choose for our cars*/
     private Color[] colors = {Color.BLUE, Color.GREEN, Color.CYAN, Color.GRAY, Color.ORANGE};
 
-    private Driver[] drivers = {new Driver((10.0 * 5280/(1*60*60*1000)), 0.2)};
+    /*is this 10mph?*/
+    private Driver[] drivers = {new Driver((10.0 * 5280/(1*60*60*1000)), 0.2),
+    		new Driver((15.0 * 5280/(1*60*60*1000)), 0.2),
+    		new Driver((20.0 * 5280/(1*60*60*1000)), 0.2),
+    		new Driver((25.0 * 5280/(1*60*60*1000)), 0.2)
+    };
 
     public CarFactory(List<Lane> lanes) {
         this.lanes = lanes;
