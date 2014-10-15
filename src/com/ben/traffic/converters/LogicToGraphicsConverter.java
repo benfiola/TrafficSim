@@ -1,12 +1,11 @@
-package com.ben.traffic.graphics;
+package com.ben.traffic.converters;
 
-import com.ben.traffic.exceptions.UninitializedConverterException;
+import com.ben.traffic.graphics.components.SimulationCanvas;
 import com.ben.traffic.logic.Freeway;
 import com.ben.traffic.logic.Lane;
 import com.ben.traffic.logic.LogicCoordinates;
 import org.apache.log4j.Logger;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -23,12 +22,12 @@ public class LogicToGraphicsConverter {
     final static Logger LOG = Logger.getLogger(LogicToGraphicsConverter.class);
 
     private static LogicToGraphicsConverter instance;
-    private FreewayCanvas panel;
+    private SimulationCanvas panel;
     private Freeway freeway;
     protected LogicToGraphicsConverter() {
     }
 
-    private void setPanel_int(FreewayCanvas panel) {
+    private void setPanel_int(SimulationCanvas panel) {
         this.panel = panel;
     }
 
@@ -36,7 +35,7 @@ public class LogicToGraphicsConverter {
         this.freeway = fway;
     }
 
-    public static void setPanel(FreewayCanvas panel) {
+    public static void setPanel(SimulationCanvas panel) {
         if(instance == null) {
             instance = new LogicToGraphicsConverter();
         }

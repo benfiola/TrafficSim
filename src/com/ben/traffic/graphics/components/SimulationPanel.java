@@ -1,6 +1,5 @@
-package com.ben.traffic.graphics;
+package com.ben.traffic.graphics.components;
 
-import com.ben.traffic.logic.MainLogic;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -11,17 +10,17 @@ import java.awt.event.ActionListener;
 /**
  * Created by Ben on 10/12/2014.
  */
-public class SimulationContentPaneCanvas extends JPanel {
-    final static Logger LOG = Logger.getLogger(SimulationContentPaneCanvas.class);
+public class SimulationPanel extends JPanel {
+    final static Logger LOG = Logger.getLogger(SimulationPanel.class);
 
-    private FreewayCanvas freewayCanvas;
+    private SimulationCanvas freewayCanvas;
     private Timer animationTimer;
     private Integer animationSpeed = 10;
 
-    public SimulationContentPaneCanvas(Dimension dimension){
+    public SimulationPanel(Dimension dimension){
         super();
         this.setSize(dimension);
-        freewayCanvas = new FreewayCanvas(dimension);
+        freewayCanvas = new SimulationCanvas(dimension);
         this.add(freewayCanvas);
         animationTimer = new Timer(animationSpeed, new AnimationActionListener(this));
     }
@@ -50,8 +49,8 @@ public class SimulationContentPaneCanvas extends JPanel {
     }
 
     private class AnimationActionListener implements ActionListener {
-        SimulationContentPaneCanvas canvas;
-        public AnimationActionListener(SimulationContentPaneCanvas canvas){
+        SimulationPanel canvas;
+        public AnimationActionListener(SimulationPanel canvas){
             super();
             this.canvas = canvas;
         }

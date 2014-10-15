@@ -18,7 +18,7 @@ public class MainLogic {
     public static MainLogic instance;
 
     /*
-        Currently we have the freeway we're simulating as well as the cars that are currently active on the freeway.
+        Currently we have the freeway we're simulating
      */
     public Freeway freeway;
 
@@ -33,14 +33,16 @@ public class MainLogic {
         return instance;
     }
 
+    //these three methods are called elsewhere in the program.
+    //we need getFreeway so that our graphics component can retrieve the logic data to paint
     public static Freeway getFreeway(){
         return MainLogic.getInstance().freeway;
     }
 
+    //also we need to control our simulation from the graphics end of things.
     public static void startSimulation() {
         MainLogic.getFreeway().startSimulation();
     }
-
     public static void stopSimulation(){
         MainLogic.getFreeway().stopSimulation();
     }

@@ -1,4 +1,4 @@
-package com.ben.traffic.graphics;
+package com.ben.traffic.graphics.components;
 
 import org.apache.log4j.Logger;
 
@@ -11,8 +11,8 @@ import java.awt.*;
 public class MainWindow extends JFrame{
     final static Logger LOG = Logger.getLogger(MainWindow.class);
 
-    public static MainWindow instance;
-    SimulationContentPane contentPane;
+    private static MainWindow instance;
+    private SimulationContentPane contentPane;
 
     protected MainWindow() {
         super("Traffic Simulation");
@@ -30,8 +30,9 @@ public class MainWindow extends JFrame{
         return instance;
     }
 
-    public static SimulationContentPaneCanvas getSimulationCanvas(){
-        return MainWindow.getInstance().contentPane.canvas;
+
+    public static SimulationPanel getSimulationCanvas(){
+        return MainWindow.getInstance().contentPane.getCanvas();
     }
 
     public static void startAnimation(){

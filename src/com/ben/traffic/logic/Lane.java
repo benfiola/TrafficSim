@@ -15,7 +15,7 @@ public class Lane {
 
     private LogicCoordinates startCoordinates;
     private LogicCoordinates endCoordinates;
-    public static Integer WIDTH = 10;
+    public static Integer WIDTH = 10; //feet
 
     public Lane(LogicCoordinates start, LogicCoordinates end) {
         this.startCoordinates = start;
