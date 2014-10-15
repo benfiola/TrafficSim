@@ -13,6 +13,11 @@ import java.awt.*;
  * Created by Ben on 10/13/2014.
  * This class serves to convert coordinates from our logical component
  * into our graphics component
+ *
+ * This is where it gets confusing - the coordinate system we use for our logic
+ * actually gets flipped for the graphics right now.  A positive coordinate system
+ * on a graphics panel goes towards the bottom right of the screen, whereas logically,
+ * our coordinate system goes towards the upper right of the screen.
  */
 public class LogicToGraphicsConverter {
     final static Logger LOG = Logger.getLogger(LogicToGraphicsConverter.class);
@@ -53,10 +58,10 @@ public class LogicToGraphicsConverter {
         Dimension panelDim = instance.panel.getSize();
         Double panelHeight = panelDim.getHeight();
         Double panelWidth = panelDim.getWidth();
-        Integer freewayHeight = instance.freeway.getLength();
-        Integer freewayWidth = (Lane.WIDTH * instance.freeway.getNumLanes());
-        Integer scaledCoordY = (int)Math.round((panelHeight/freewayHeight) * coords.getY());
-        Integer scaledCoordX = (int)Math.round((panelWidth/freewayWidth) * coords.getX());
+        Double freewayHeight = instance.freeway.getLength();
+        Double freewayWidth = (Lane.WIDTH * instance.freeway.getNumLanes());
+        Integer scaledCoordY = (int) Math.round(((panelHeight/freewayHeight) * coords.getY()));
+        Integer scaledCoordX = (int) Math.round(((panelWidth/freewayWidth) * coords.getX()));
         return new Point(scaledCoordX, scaledCoordY);
     }
 

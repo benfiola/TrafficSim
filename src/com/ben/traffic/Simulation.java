@@ -1,6 +1,7 @@
 package com.ben.traffic;
 import com.ben.traffic.graphics.MainWindow;
 import com.ben.traffic.logic.MainLogic;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**

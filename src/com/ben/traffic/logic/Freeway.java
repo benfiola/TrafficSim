@@ -2,8 +2,7 @@ package com.ben.traffic.logic;
 
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Ben on 10/12/2014.
@@ -12,18 +11,20 @@ import java.util.List;
 public class Freeway {
     final static Logger LOG = Logger.getLogger(Freeway.class);
 
+    private Timer simulationTimer;
+
     /*
         These represent static values for freeway length and number of lanes.
         In the future, it'd be nice to customize these via the UI but let's not get ahead of ourselves.
      */
-    private static Integer FREEWAY_LENGTH = 5280/16;
-    private static Integer NUM_LANES = 3;
+    private static Double FREEWAY_LENGTH = 5280/16.0;
+    private static Double NUM_LANES = 3.0;
 
     /*
         private field variables that store the various properties of the freeway.
      */
-    private Integer numLanes;
-    private Integer length;
+    private Double numLanes;
+    private Double length;
     private List<Lane> lanes;
     private List<Car> cars;
     private CarFactory factory;
@@ -32,7 +33,6 @@ public class Freeway {
         initialize this bad boy with the basics - our static values for the fields and an empty list of lanes
      */
     public Freeway() {
-
         this.numLanes = NUM_LANES;
         this.length = FREEWAY_LENGTH;
         this.lanes = new ArrayList<Lane>();
@@ -47,8 +47,8 @@ public class Freeway {
      */
     private void initLanes(){
         for(int x = 0; x < numLanes; x++) {
-            int centerX = ((x * Lane.WIDTH) + (Lane.WIDTH/2));
-            this.lanes.add(new Lane(new LogicCoordinates(centerX, 0), new LogicCoordinates(centerX, this.length)));
+            Double centerX = ((x * Lane.WIDTH) + (Lane.WIDTH/2.0));
+            this.lanes.add(new Lane(new LogicCoordinates(centerX, 0.0), new LogicCoordinates(centerX, this.length)));
         }
     }
 
@@ -56,14 +56,45 @@ public class Freeway {
         we call this method from the simulation controller as needed to spawn cars.
      */
     public void spawnCar(){
-        this.factory.spawnCar();
+        Car toAdd = this.factory.spawnCar();
+        this.cars.add(toAdd);
+        LOG.info("Spawning car " + toAdd);
+    }
+
+    public void startSimulation(){
+        if(simulationTimer == null) {
+            simulationTimer = new Timer();
+            simulationTimer.schedule(new TimerTask() {
+                public void run() {
+                    ArrayList<Car> toRemove = new ArrayList<Car>();
+                    for (Car car : cars) {
+                        car.calculateTrajectory(new Date().getTime());
+                        if (isCarOutOfBounds(car)) {
+                            toRemove.add(car);
+                        }
+                    }
+                    cars.removeAll(toRemove);
+                }
+            }, 0, 5);
+        }
+    }
+
+    private boolean isCarOutOfBounds(Car c){
+        return c.getCurrCoordinates().getY() > this.getLength();
+    }
+
+    public void stopSimulation(){
+        if(simulationTimer != null) {
+            simulationTimer.cancel();
+            simulationTimer = null;
+        }
     }
 
     /*
         standard accessor methods for the fields we'll need from this freeway.
      */
-    public Integer getNumLanes() { return this.numLanes; }
+    public Double getNumLanes() { return this.numLanes; }
     public List<Lane> getLanes() { return this.lanes; }
-    public Integer getLength() { return this.length; }
+    public Double getLength() { return this.length; }
     public List<Car> getCars() { return this.cars; }
 }

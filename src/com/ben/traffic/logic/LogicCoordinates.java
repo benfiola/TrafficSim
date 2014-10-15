@@ -23,14 +23,14 @@ import org.apache.log4j.Logger;
 public class LogicCoordinates {
     final static Logger LOG = Logger.getLogger(LogicCoordinates.class);
 
-    private Integer x;
-    private Integer y;
+    private Double x;
+    private Double y;
 
-    public LogicCoordinates(int x, int y) {
+    public LogicCoordinates(Double x, Double y) {
         this.x = x;
         this.y = y;
     }
 
-    public Integer getX() { return this.x; }
-    public Integer getY() { return this.y; }
+    public Double getX() { return this.x; }
+    public Double getY() { return this.y; }
 }

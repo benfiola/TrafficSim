@@ -31,7 +31,7 @@ public class Car {
     private Double currentAcceleration;
     private Double currentVelocity;
     private long currTime;
-    private LogicCoordinates currCoords;
+    private LogicCoordinates currentCoordinates;
 
     public Car(Driver d, Lane lane, Color color) {
         this.driver = d;
@@ -40,7 +40,7 @@ public class Car {
         this.currentVelocity = d.getDesiredVelocity();
         this.currentHeading = getAngle(lane.getStartCoordinates(), lane.getEndCoordinates());
         this.currentAcceleration = 0.0;
-        this.currCoords = lane.getStartCoordinates();
+        this.currentCoordinates = lane.getStartCoordinates();
         this.color = color;
         this.currTime = new Date().getTime();
     }
@@ -54,9 +54,22 @@ public class Car {
     }
 
     public void calculateTrajectory(long nextTime) {
+        //get our time difference here
         long timeDifferential = nextTime - this.currTime;
 
-        //perform distance calculations here;
+        //calculate the velocities in each component's direction
+        Double velocityX = Math.cos(Math.toRadians(this.currentHeading)) * this.currentVelocity;
+        Double velocityY = Math.sin(Math.toRadians(this.currentHeading)) * this.currentVelocity;
+
+        //calculate our new coordinates and create a wrapper object
+        Double newX = this.currentCoordinates.getX() + (velocityX*timeDifferential)  + (.5*this.currentAcceleration*timeDifferential*timeDifferential);
+        Double newY = this.currentCoordinates.getY() + (velocityY*timeDifferential) + (.5*this.currentAcceleration*timeDifferential*timeDifferential);
+        LogicCoordinates newLocation = new LogicCoordinates(newX, newY);
+
+        //set all the pertinent fields
+        this.currentCoordinates = newLocation;
+        this.currentVelocity = this.currentVelocity + (this.currentAcceleration * timeDifferential);
+        this.currTime = nextTime;
     }
 
     /*
@@ -68,6 +81,6 @@ public class Car {
     public Double getCurrentAcceleration() { return this.currentAcceleration; }
     public Double getCurrentHeading() { return this.currentHeading; }
     public Double getCurrentVelocity() { return this.currentVelocity; }
-    public LogicCoordinates getCurrCoordinates() { return this.currCoords; }
+    public LogicCoordinates getCurrCoordinates() { return this.currentCoordinates; }
     public Color getColor() { return this.color; }
 }

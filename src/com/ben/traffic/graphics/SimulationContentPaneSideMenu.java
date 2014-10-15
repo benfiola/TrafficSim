@@ -42,13 +42,15 @@ public class SimulationContentPaneSideMenu extends JPanel {
 
         spawnButton = new JButton("Spawn Vehicle");
         spawnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        spawnButton.addMouseListener(new SpawnButtonMouseListener());
         this.add(spawnButton);
     }
 
     private class StopButtonMouseListener implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
-            MainWindow.getSimulationCanvas().stopAnimation();
+            MainLogic.stopSimulation();
+            MainWindow.stopAnimation();
         }
 
         @Override
@@ -68,7 +70,8 @@ public class SimulationContentPaneSideMenu extends JPanel {
     {
         @Override
         public void mouseClicked(MouseEvent e) {
-            MainWindow.getSimulationCanvas().startAnimation();
+            MainLogic.startSimulation();
+            MainWindow.startAnimation();
         }
 
         @Override

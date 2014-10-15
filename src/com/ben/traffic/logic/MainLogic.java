@@ -34,8 +34,14 @@ public class MainLogic {
     }
 
     public static Freeway getFreeway(){
-        return instance.freeway;
+        return MainLogic.getInstance().freeway;
     }
 
+    public static void startSimulation() {
+        MainLogic.getFreeway().startSimulation();
+    }
 
+    public static void stopSimulation(){
+        MainLogic.getFreeway().stopSimulation();
+    }
 }

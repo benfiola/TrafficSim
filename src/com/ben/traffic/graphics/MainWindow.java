@@ -31,6 +31,14 @@ public class MainWindow extends JFrame{
     }
 
     public static SimulationContentPaneCanvas getSimulationCanvas(){
-        return instance.contentPane.canvas;
+        return MainWindow.getInstance().contentPane.canvas;
+    }
+
+    public static void startAnimation(){
+        MainWindow.getSimulationCanvas().startAnimation();
+    }
+
+    public static void stopAnimation(){
+        MainWindow.getSimulationCanvas().stopAnimation();
     }
 }
