@@ -1,10 +1,12 @@
 package com.ben.traffic.logic;
 
-import org.apache.log4j.Logger;
-
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.log4j.Logger;
+
+import com.ben.traffic.converters.VelocityConverter;
 
 /**
  * Created by Ben on 10/13/2014.
@@ -20,10 +22,10 @@ public class CarFactory {
     private Color[] colors = {Color.BLUE, Color.GREEN, Color.CYAN, Color.GRAY, Color.ORANGE};
 
     /*is this 10mph?*/
-    private Driver[] drivers = {new Driver((10.0 * 5280/(1*60*60*1000)), 0.2),
-    		new Driver((15.0 * 5280/(1*60*60*1000)), 0.2),
-    		new Driver((20.0 * 5280/(1*60*60*1000)), 0.2),
-    		new Driver((25.0 * 5280/(1*60*60*1000)), 0.2)
+    private Driver[] drivers = {new Driver(VelocityConverter.milesph(10.0), 0.2),
+    		new Driver(VelocityConverter.milesph(15.0), 0.2),
+    		new Driver(VelocityConverter.milesph(20.0), 0.2),
+    		new Driver(VelocityConverter.milesph(25.0), 0.2)
     };
 
     public CarFactory(List<Lane> lanes) {

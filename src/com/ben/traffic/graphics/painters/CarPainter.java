@@ -1,17 +1,21 @@
 package com.ben.traffic.graphics.painters;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
+
+import org.apache.log4j.Logger;
+
 import com.ben.traffic.converters.LogicToGraphicsConverter;
 import com.ben.traffic.logic.Car;
 import com.ben.traffic.logic.LogicCoordinates;
-
-import java.awt.*;
 
 /**
  * Created by Ben on 10/14/2014.
  */
 public class CarPainter {
-
+	final static Logger LOG = Logger.getLogger(CarPainter.class);
     public static void paint(Object carObj, Graphics2D g) {
+    	
         if(carObj instanceof Car) {
             Car car = (Car) carObj;
 

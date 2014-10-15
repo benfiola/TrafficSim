@@ -1,20 +1,27 @@
 package com.ben.traffic.graphics.painters;
 
-import com.ben.traffic.converters.LogicToGraphicsConverter;
-import com.ben.traffic.logic.*;
-
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.ben.traffic.converters.LogicToGraphicsConverter;
+import com.ben.traffic.logic.Car;
+import com.ben.traffic.logic.Freeway;
+import com.ben.traffic.logic.Lane;
+import com.ben.traffic.logic.LogicCoordinates;
+import com.ben.traffic.logic.MainLogic;
 
 /**
  * Created by Ben on 10/14/2014.
  */
 public class FreewayPainter {
-
+	final static Logger LOG = Logger.getLogger(FreewayPainter.class);
+	
     private static BasicStroke BORDER = new BasicStroke(1.0f);
     private static float[] dash = {3.0f};
     private static BasicStroke DASHED = new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND, 10.0f, dash, 0.0f);
