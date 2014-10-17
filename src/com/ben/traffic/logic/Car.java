@@ -34,7 +34,7 @@ public class Car {
     private LogicCoordinates currentCoordinates;
     
     public Car(Driver d, Lane lane, Color color) {
-    	this(d,lane,color,0);
+    	this(d,lane,color,new Date().getTime());
     }
 
     public Car(Driver d, Lane lane, Color color, long time) {

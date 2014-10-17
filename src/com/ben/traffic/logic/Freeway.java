@@ -71,7 +71,8 @@ public class Freeway {
             simulationTimer.schedule(new TimerTask() {
                 public void run() {
                     ArrayList<Car> toRemove = new ArrayList<Car>();
-                    for (Car car : cars) {
+                    for(int i = 0; i < cars.size(); i++) {
+                    	Car car = cars.get(i);
                     	controller.updateTrajectory(car, new Date().getTime());
                         //car.calculateTrajectory(new Date().getTime());
                         if (isCarOutOfBounds(car)) {
@@ -85,7 +86,8 @@ public class Freeway {
     }
 
     private boolean isCarOutOfBounds(Car c){
-        return c.getCoordinates().getY() > this.getLength();
+        return false;
+    	//return c.getCoordinates().getY() < this.getLength();
     }
 
     public void stopSimulation(){
