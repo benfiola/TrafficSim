@@ -19,7 +19,7 @@ public class CarPainter {
         if(carObj instanceof Car) {
             Car car = (Car) carObj;
 
-            LogicCoordinates carCenter = car.getCurrCoordinates();
+            LogicCoordinates carCenter = car.getCoordinates();
             LogicCoordinates bottomLeft = new LogicCoordinates((carCenter.getX() - car.getWidth() / 2), (carCenter.getY() + car.getLength() / 2));
             LogicCoordinates bottomRight = new LogicCoordinates((carCenter.getX() + car.getWidth() / 2), (carCenter.getY() + car.getLength() / 2));
             LogicCoordinates topLeft = new LogicCoordinates((carCenter.getX() - car.getWidth() / 2), (carCenter.getY() - car.getLength() / 2));

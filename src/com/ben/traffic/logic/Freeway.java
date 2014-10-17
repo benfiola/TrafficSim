@@ -2,6 +2,8 @@ package com.ben.traffic.logic;
 
 import org.apache.log4j.Logger;
 
+import com.ben.traffic.controllers.CarController;
+
 import java.util.*;
 
 /**
@@ -28,6 +30,7 @@ public class Freeway {
     private List<Lane> lanes;
     private List<Car> cars;
     private CarFactory factory;
+    private CarController controller;
 
     /*
         initialize this bad boy with the basics - our static values for the fields and an empty list of lanes
@@ -40,6 +43,7 @@ public class Freeway {
 
         this.cars = new ArrayList<Car>();
         this.factory = new CarFactory(this.lanes);
+        this.controller = new CarController();
     }
 
     /*
@@ -68,7 +72,8 @@ public class Freeway {
                 public void run() {
                     ArrayList<Car> toRemove = new ArrayList<Car>();
                     for (Car car : cars) {
-                        car.calculateTrajectory(new Date().getTime());
+                    	controller.updateTrajectory(car, new Date().getTime());
+                        //car.calculateTrajectory(new Date().getTime());
                         if (isCarOutOfBounds(car)) {
                             toRemove.add(car);
                         }
@@ -80,7 +85,7 @@ public class Freeway {
     }
 
     private boolean isCarOutOfBounds(Car c){
-        return c.getCurrCoordinates().getY() > this.getLength();
+        return c.getCoordinates().getY() > this.getLength();
     }
 
     public void stopSimulation(){

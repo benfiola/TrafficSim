@@ -30,10 +30,14 @@ public class Car {
     private Double currentHeading;
     private Double currentAcceleration;
     private Double currentVelocity;
-    private long currTime;
+    private long lastTime;
     private LogicCoordinates currentCoordinates;
-
+    
     public Car(Driver d, Lane lane, Color color) {
+    	this(d,lane,color,0);
+    }
+
+    public Car(Driver d, Lane lane, Color color, long time) {
         this.driver = d;
         this.length = LENGTH;
         this.width = WIDTH;
@@ -42,7 +46,7 @@ public class Car {
         this.currentAcceleration = 0.0;
         this.currentCoordinates = lane.getStartCoordinates();
         this.color = color;
-        this.currTime = new Date().getTime();
+        this.lastTime = time;
     }
 
     private Double getAngle(LogicCoordinates point1, LogicCoordinates point2) {
@@ -53,28 +57,7 @@ public class Car {
         return angle;
     }
 
-    public void calculateTrajectory(long nextTime) {
-        //get our time difference here
-        long timeDifferential = nextTime - this.currTime;
-
-        //calculate the velocities in each component's direction
-        Double velocityX = Math.cos(Math.toRadians(this.currentHeading)) * this.currentVelocity;
-        Double velocityY = Math.sin(Math.toRadians(this.currentHeading)) * this.currentVelocity;
-
-        //calculate our new coordinates and create a wrapper object
-        Double newX = this.currentCoordinates.getX() + (velocityX*timeDifferential)  + (.5*this.currentAcceleration*timeDifferential*timeDifferential);
-        Double newY = this.currentCoordinates.getY() + (velocityY*timeDifferential) + (.5*this.currentAcceleration*timeDifferential*timeDifferential);
-        LogicCoordinates newLocation = new LogicCoordinates(newX, newY);
-
-        //set all the pertinent fields
-        this.currentCoordinates = newLocation;
-        this.currentVelocity = this.currentVelocity + (this.currentAcceleration * timeDifferential);
-        this.currTime = nextTime;
-    }
     
-    public void calculateDriverChanges() {
-    	
-    }
 
     /*
         Accessor methods for the fields we need.
@@ -82,9 +65,15 @@ public class Car {
     public Driver getDriver() { return this.driver; }
     public Double getWidth() { return this.width; }
     public Double getLength() { return this.length; }
-    public Double getCurrentAcceleration() { return this.currentAcceleration; }
-    public Double getCurrentHeading() { return this.currentHeading; }
-    public Double getCurrentVelocity() { return this.currentVelocity; }
-    public LogicCoordinates getCurrCoordinates() { return this.currentCoordinates; }
+    public Double getAcceleration() { return this.currentAcceleration; }
+    public void setAcceleration(Double a) { currentAcceleration = a; }
+    public Double getHeading() { return this.currentHeading; }
+    public void setHeading(Double h) { currentHeading = h; }
+    public Double getVelocity() { return this.currentVelocity; }
+    public void setVelocity(Double v) { currentVelocity = v; }
+    public LogicCoordinates getCoordinates() { return this.currentCoordinates; }
+    public void setCoordinates(LogicCoordinates c) { currentCoordinates = c; }
     public Color getColor() { return this.color; }
+    public long getTime() { return this.lastTime; }
+    public void setTime(long t) { lastTime = t; }
 }
