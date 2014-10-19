@@ -59,7 +59,7 @@ public class LogicToGraphicsConverter {
         Double panelWidth = panelDim.getWidth();
         Double freewayHeight = instance.freeway.getLength();
         Double freewayWidth = (Lane.WIDTH * instance.freeway.getNumLanes());
-        Integer scaledCoordY = (int) Math.round(((panelHeight/freewayHeight) * coords.getY()));
+        Integer scaledCoordY = (int) Math.round(panelHeight - ((panelHeight/freewayHeight) * coords.getY()));
         Integer scaledCoordX = (int) Math.round(((panelWidth/freewayWidth) * coords.getX()));
         return new Point(scaledCoordX, scaledCoordY);
     }
