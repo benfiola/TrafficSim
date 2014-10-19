@@ -1,5 +1,9 @@
 package com.ben.traffic.graphics.components;
 
+import com.ben.traffic.messaging.EventSystem;
+import com.ben.traffic.messaging.events.SimulationStartEvent;
+import com.ben.traffic.messaging.listeners.SimulationStartListener;
+import com.ben.traffic.messaging.listeners.SimulationStopListener;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -22,7 +26,8 @@ public class SimulationPanel extends JPanel {
         this.setSize(dimension);
         freewayCanvas = new SimulationCanvas(dimension);
         this.add(freewayCanvas);
-        animationTimer = new Timer(animationSpeed, new AnimationActionListener(this));
+        EventSystem.addListener(new PanelSimulationStartListener(this));
+        EventSystem.addListener(new PanelSimulationStopListener(this));
     }
 
     public void startAnimation(){
@@ -36,6 +41,7 @@ public class SimulationPanel extends JPanel {
         if(animationTimer != null) {
             animationTimer.stop();
         }
+        animationTimer = null;
     }
 
     @Override
@@ -46,6 +52,32 @@ public class SimulationPanel extends JPanel {
         g2.setColor(Color.WHITE);
         g2.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         g2.fillRect(0,0,this.getWidth(), this.getHeight());
+    }
+
+    private class PanelSimulationStartListener extends SimulationStartListener {
+        private SimulationPanel panel;
+
+        public PanelSimulationStartListener(SimulationPanel panel) {
+            this.panel = panel;
+        }
+
+        @Override
+        public void doAction(){
+            this.panel.startAnimation();
+        }
+    }
+
+    private class PanelSimulationStopListener extends SimulationStopListener {
+        private SimulationPanel panel;
+
+        public PanelSimulationStopListener(SimulationPanel panel) {
+            this.panel = panel;
+        }
+
+        @Override
+        public void doAction(){
+            this.panel.stopAnimation();
+        }
     }
 
     private class AnimationActionListener implements ActionListener {

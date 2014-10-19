@@ -38,4 +38,5 @@ public class SimulationCanvas extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         FreewayPainter.with(this.getSize()).paint(MainLogic.getFreeway(), g2);
     }
+
 }
