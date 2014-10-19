@@ -31,6 +31,7 @@ public class Car {
     private Double currentAcceleration;
     private Double currentVelocity;
     private long lastTime;
+    private long spawnTime;
     private LogicCoordinates currentCoordinates;
     
     public Car(Driver d, Lane lane, Color color) {
@@ -47,6 +48,7 @@ public class Car {
         this.currentCoordinates = lane.getStartCoordinates();
         this.color = color;
         this.lastTime = time;
+        this.spawnTime = new Date().getTime();
     }
 
     private Double getAngle(LogicCoordinates point1, LogicCoordinates point2) {
