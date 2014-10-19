@@ -38,12 +38,4 @@ public class MainLogic {
     public static Freeway getFreeway(){
         return MainLogic.getInstance().freeway;
     }
-
-    //also we need to control our simulation from the graphics end of things.
-    public static void startSimulation() {
-        MainLogic.getFreeway().startSimulation();
-    }
-    public static void stopSimulation(){
-        MainLogic.getFreeway().stopSimulation();
-    }
 }

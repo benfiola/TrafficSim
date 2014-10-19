@@ -37,7 +37,7 @@ public class Car {
     	this(d,lane,color,new Date().getTime());
     }
 
-    public Car(Driver d, Lane lane, Color color, long time) {
+    private Car(Driver d, Lane lane, Color color, long time) {
         this.driver = d;
         this.length = LENGTH;
         this.width = WIDTH;

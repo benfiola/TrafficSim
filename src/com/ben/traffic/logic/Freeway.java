@@ -1,5 +1,10 @@
 package com.ben.traffic.logic;
 
+import com.ben.traffic.messaging.EventSystem;
+import com.ben.traffic.messaging.listeners.CarSpawnListener;
+import com.ben.traffic.messaging.listeners.SimulationRestartListener;
+import com.ben.traffic.messaging.listeners.SimulationStartListener;
+import com.ben.traffic.messaging.listeners.SimulationStopListener;
 import org.apache.log4j.Logger;
 
 import com.ben.traffic.controllers.CarController;
@@ -44,6 +49,10 @@ public class Freeway {
         this.cars = new ArrayList<Car>();
         this.factory = new CarFactory(this.lanes);
         this.controller = new CarController();
+        EventSystem.addListener(new SimulationCarSpawnListener(this));
+        EventSystem.addListener(new LogicSimulationStartListener(this));
+        EventSystem.addListener(new LogicSimulationStopListener(this));
+        EventSystem.addListener(new LogicSimulationRestartListener(this));
     }
 
     /*
@@ -97,6 +106,10 @@ public class Freeway {
         }
     }
 
+    public void resetSimulation(){
+        this.cars = new ArrayList<Car>();
+    }
+
     /*
         standard accessor methods for the fields we'll need from this freeway.
      */
@@ -104,4 +117,54 @@ public class Freeway {
     public List<Lane> getLanes() { return this.lanes; }
     public Double getLength() { return this.length; }
     public List<Car> getCars() { return this.cars; }
+
+    private class SimulationCarSpawnListener extends CarSpawnListener
+    {
+        private Freeway fway;
+
+        public SimulationCarSpawnListener(Freeway fway) {
+            this.fway = fway;
+        }
+
+        @Override
+        public void doAction(){
+            this.fway.spawnCar();
+        }
+    }
+
+    private class LogicSimulationStartListener extends SimulationStartListener {
+        private Freeway fway;
+        public LogicSimulationStartListener(Freeway fway) {
+            this.fway = fway;
+        }
+
+        @Override
+        public void doAction(){
+            this.fway.startSimulation();
+        }
+    }
+
+    private class LogicSimulationStopListener extends SimulationStopListener {
+        private Freeway fway;
+        public LogicSimulationStopListener(Freeway fway) {
+            this.fway = fway;
+        }
+
+        @Override
+        public void doAction(){
+            this.fway.stopSimulation();
+        }
+    }
+
+    private class LogicSimulationRestartListener extends SimulationRestartListener {
+        private Freeway fway;
+        public LogicSimulationRestartListener(Freeway fway) {
+            this.fway = fway;
+        }
+
+        @Override
+        public void doAction(){
+            this.fway.resetSimulation();
+        }
+    }
 }
