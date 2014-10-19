@@ -5,6 +5,7 @@ import com.ben.traffic.messaging.listeners.CarSpawnListener;
 import com.ben.traffic.messaging.listeners.SimulationRestartListener;
 import com.ben.traffic.messaging.listeners.SimulationStartListener;
 import com.ben.traffic.messaging.listeners.SimulationStopListener;
+import com.ben.traffic.structures.CarLinkedList;
 import org.apache.log4j.Logger;
 
 import com.ben.traffic.controllers.CarController;
