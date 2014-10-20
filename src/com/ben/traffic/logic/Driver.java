@@ -11,9 +11,7 @@ import com.ben.traffic.converters.AccelerationConverter;
  */
 public class Driver {
     final static Logger LOG = Logger.getLogger(Driver.class);
-    
-    private static Double ACCELERATION_THRESHOLD = AccelerationConverter.metersps2(3.5);
-    private static Double BRAKING_THRESHOLD = -AccelerationConverter.feetps2(35.0);
+
     private static Double SAFE_LOOK_AHEAD_TIME = 3000.0;
     private Double desiredVelocity;
     private Double aggression;
@@ -25,22 +23,14 @@ public class Driver {
     }
 
     public Double getDesiredAcceleration(Double currentVelocity){
-        return getDesiredAcceleration(null, currentVelocity);
+       if(currentVelocity < desiredVelocity) {
+           return car.ACCELERATION_THRESHOLD * this.aggression;
+       }
+       return 0.0;
     }
     /*
      * 
      */
-    public Double getDesiredAcceleration(Car nextCar, Double currentVelocity) {
-        Double acceleration = 0.0;
-        if(nextCar == null && currentVelocity < desiredVelocity) {
-            acceleration = ACCELERATION_THRESHOLD * this.aggression;
-        }
-    	else if(nextCar != null && nextCar.getVelocity() < currentVelocity) {
-            Double urgency = this.getCar().getDistance(nextCar) / this.getLookaheadDistance(currentVelocity);;
-            acceleration = -(BRAKING_THRESHOLD * urgency * aggression);
-        }
-        return acceleration;
-    }
 
     /*
      * Statistically, 3 seconds ahead is a 'safe' distance to keep behind traffic
@@ -53,8 +43,8 @@ public class Driver {
     	
     	//let's calculate the minimum amount of time needed to stop given the braking
     	//threshold - we don't want to cause an accident!
-    	Double timeToStop = currentVelocity/BRAKING_THRESHOLD;
-    	Double minimumBrakingDistance = 0  + (currentVelocity * timeToStop) + (BRAKING_THRESHOLD * timeToStop * timeToStop);
+    	Double timeToStop = currentVelocity/Car.BRAKING_THRESHOLD;
+    	Double minimumBrakingDistance = 0  + (currentVelocity * timeToStop) + (car.BRAKING_THRESHOLD * timeToStop * timeToStop);
     	
     	//we take the aggression and multiply it by the safe distance at which a car should follow
     	Double toReturn = (aggression) * (currentVelocity * SAFE_LOOK_AHEAD_TIME);	
@@ -67,8 +57,8 @@ public class Driver {
     	return toReturn;
     }
 
-    public void setCar(Car car) { this.car = car; }
     public Double getDesiredVelocity(){ return this.desiredVelocity; }
     public Double getAggression() { return this.aggression; }
     public Car getCar(){ return this.car; }
+    public void setCar(Car car) { this.car = car; }
 }

@@ -1,5 +1,6 @@
 package com.ben.traffic.logic;
 
+import com.ben.traffic.converters.AccelerationConverter;
 import org.apache.log4j.Logger;
 
 import java.awt.*;
@@ -14,8 +15,10 @@ import java.util.Date;
 public class Car {
     final static Logger LOG = Logger.getLogger(Car.class);
 
-    private static Double LENGTH = 13.6;
-    private static Double WIDTH = 6.5;
+    public static Double LENGTH = 13.6;
+    public static Double WIDTH = 6.5;
+    public static Double ACCELERATION_THRESHOLD = AccelerationConverter.metersps2(3.5);
+    public static Double BRAKING_THRESHOLD = AccelerationConverter.feetps2(35.0);
     private Double length;
     private Double width;
     private Driver driver;
