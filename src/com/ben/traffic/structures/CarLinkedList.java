@@ -2,7 +2,9 @@ package com.ben.traffic.structures;
 
 import com.ben.traffic.logic.Car;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Ben on 10/19/2014.
@@ -14,6 +16,13 @@ public class CarLinkedList {
 
     public CarLinkedList(){
         nodeMap = new HashMap<Car, CarLinkedListNode>();
+    }
+
+    public CarLinkedList(List<Car> sortedList) {
+        this.nodeMap = new HashMap<Car, CarLinkedListNode>();
+        for(Car car : sortedList) {
+            this.insertEnd(car);
+        }
     }
 
     public boolean isEmpty(){
@@ -59,14 +68,20 @@ public class CarLinkedList {
     }
 
     public boolean insertBefore(CarLinkedListNode node, Car toAdd) {
-        CarLinkedListNode nodeToAdd = new CarLinkedListNode(node.getPrevious(), node, toAdd);
-        nodeMap.put(toAdd, nodeToAdd);
-        CarLinkedListNode oldPrevNode = node.getPrevious();
-        node.setPrevious(nodeToAdd);
-        if(oldPrevNode != null) {
-            oldPrevNode.setNext(nodeToAdd);
-        } else if (node.equals(head)) {
+        if(node != null) {
+            CarLinkedListNode nodeToAdd = new CarLinkedListNode(node.getPrevious(), node, toAdd);
+            nodeMap.put(toAdd, nodeToAdd);
+            CarLinkedListNode oldPrevNode = node.getPrevious();
+            node.setPrevious(nodeToAdd);
+            if (oldPrevNode != null) {
+                oldPrevNode.setNext(nodeToAdd);
+            } else if (node.equals(head)) {
+                this.head = nodeToAdd;
+            }
+        } else if(this.head == null) {
+            CarLinkedListNode nodeToAdd = new CarLinkedListNode(null, null, toAdd);
             this.head = nodeToAdd;
+            nodeMap.put(toAdd, nodeToAdd);
         }
         this.size++;
         return true;
@@ -123,6 +138,29 @@ public class CarLinkedList {
             return true;
         }
         return false;
+    }
+
+    public Car findNearestFrontNeighbor(Car c, double maximumDistance) {
+        CarLinkedListNode curr = this.nodeMap.get(c).getNext();
+        double currDistance;
+        if(curr == null) {
+            currDistance = maximumDistance + 1;
+        } else {
+            currDistance = c.getDistance(curr.getValue());
+        }
+        while(curr != null && currDistance <= maximumDistance) {
+            if(curr.getValue().getLane().equals(c.getLane())) {
+                return curr.getValue();
+            } else {
+                curr = curr.getNext();
+                if(curr == null) {
+                    currDistance = maximumDistance + 1;
+                } else {
+                    currDistance = c.getDistance(curr.getValue());
+                }
+            }
+        }
+        return null;
     }
 
     public void print(){

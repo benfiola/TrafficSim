@@ -35,7 +35,8 @@ public class CarFactory {
     /*spawns a random car into a random lane*/
     public Car spawnCar() {
         Random rand = new Random();
-        Lane randomLane = lanes.get(rand.nextInt(lanes.size()));
+        //Lane randomLane = lanes.get(rand.nextInt(lanes.size()));
+        Lane randomLane = lanes.get(0);
         Color randomColor = colors[rand.nextInt(colors.length)];
         Driver randomDriver = drivers[rand.nextInt(drivers.length)];
         Car toReturn = new Car(randomDriver, randomLane, randomColor);

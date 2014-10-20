@@ -80,10 +80,17 @@ public class Freeway {
             simulationTimer = new Timer();
             simulationTimer.schedule(new TimerTask() {
                 public void run() {
+                    Collections.sort(cars, new Comparator<Car>() {
+                        @Override
+                        public int compare(Car o1, Car o2) {
+                            return o1.getCoordinates().getY().compareTo(o2.getCoordinates().getY());
+                        }
+                    });
+                    CarLinkedList neighborLinkedList = new CarLinkedList(cars);
                     ArrayList<Car> toRemove = new ArrayList<Car>();
                     for(int i = 0; i < cars.size(); i++) {
                     	Car car = cars.get(i);
-                    	controller.updateTrajectory(car, new Date().getTime());
+                    	controller.updateTrajectory(car, new Date().getTime(), neighborLinkedList.findNearestFrontNeighbor(car, car.getDriver().getLookaheadDistance(car.getVelocity())));
                         //car.calculateTrajectory(new Date().getTime());
                         if (isCarOutOfBounds(car)) {
                             toRemove.add(car);

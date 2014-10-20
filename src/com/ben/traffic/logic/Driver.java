@@ -17,26 +17,31 @@ public class Driver {
     private static Double SAFE_LOOK_AHEAD_TIME = 3000.0;
     private Double desiredVelocity;
     private Double aggression;
+    private Car car;
 
     public Driver(Double desiredVelocity, Double aggression) {
         this.desiredVelocity = desiredVelocity;
         this.aggression = aggression;
     }
-    
+
+    public Double getDesiredAcceleration(Double currentVelocity){
+        return getDesiredAcceleration(null, currentVelocity);
+    }
     /*
      * 
      */
-    public Double getDesiredAcceleration(Double urgency) { 
-    	return 0.0;
+    public Double getDesiredAcceleration(Car nextCar, Double currentVelocity) {
+        Double acceleration = 0.0;
+        if(nextCar == null && currentVelocity < desiredVelocity) {
+            acceleration = ACCELERATION_THRESHOLD * this.aggression;
+        }
+    	else if(nextCar != null && nextCar.getVelocity() < currentVelocity) {
+            Double urgency = this.getCar().getDistance(nextCar) / this.getLookaheadDistance(currentVelocity);;
+            acceleration = -(BRAKING_THRESHOLD * urgency * aggression);
+        }
+        return acceleration;
     }
-    
-    /*
-     * 
-     */
-    public Double getDesiredDeceleration(Double urgency) {
-    	return 0.0;
-    }
-    
+
     /*
      * Statistically, 3 seconds ahead is a 'safe' distance to keep behind traffic
      * We use this to measure a need to accelerate/decelerate
@@ -61,7 +66,9 @@ public class Driver {
     	}
     	return toReturn;
     }
-    
+
+    public void setCar(Car car) { this.car = car; }
     public Double getDesiredVelocity(){ return this.desiredVelocity; }
     public Double getAggression() { return this.aggression; }
+    public Car getCar(){ return this.car; }
 }

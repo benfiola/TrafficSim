@@ -19,6 +19,7 @@ public class Car {
     private Double length;
     private Double width;
     private Driver driver;
+    private Lane lane;
 
     /*probably the only instance of graphics + logic coupling - let's give this car a color here*/
     private Color color;
@@ -39,6 +40,7 @@ public class Car {
 
     private Car(Driver d, Lane lane, Color color, long time) {
         this.driver = d;
+        d.setCar(this);
         this.length = LENGTH;
         this.width = WIDTH;
         this.currentVelocity = d.getDesiredVelocity();
@@ -47,14 +49,23 @@ public class Car {
         this.currentCoordinates = lane.getStartCoordinates();
         this.color = color;
         this.lastTime = time;
+        this.lane = lane;
     }
 
-    private Double getAngle(LogicCoordinates point1, LogicCoordinates point2) {
+    public Double getAngle(LogicCoordinates point1, LogicCoordinates point2) {
         Double angle = Math.toDegrees(Math.atan2(point2.getY() - point1.getY(), point2.getX() - point1.getX()));
         if(angle < 0) {
             angle = angle + 360.0;
         }
         return angle;
+    }
+
+    public Double getDistance(Car other) {
+        Double otherY = other.getCoordinates().getY();
+        Double otherX = other.getCoordinates().getX();
+        Double thisY = this.getCoordinates().getY();
+        Double thisX = this.getCoordinates().getX();
+        return Math.sqrt(Math.pow((otherX - thisX),2) + Math.pow((otherY - thisY), 2));
     }
 
     
@@ -76,4 +87,5 @@ public class Car {
     public Color getColor() { return this.color; }
     public long getTime() { return this.lastTime; }
     public void setTime(long t) { lastTime = t; }
+    public Lane getLane() { return this.lane; }
 }

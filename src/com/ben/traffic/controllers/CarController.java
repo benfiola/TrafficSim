@@ -2,10 +2,11 @@ package com.ben.traffic.controllers;
 
 import com.ben.traffic.logic.Car;
 import com.ben.traffic.logic.LogicCoordinates;
+import com.ben.traffic.structures.CarLinkedList;
 
 public class CarController {
 	
-	public void updateTrajectory(Car car,long nextTime) {
+	public void updateTrajectory(Car car,long nextTime, Car nearestNeighbor) {
         //get our time difference here
         long timeDifferential = nextTime - car.getTime();
 
@@ -18,8 +19,13 @@ public class CarController {
         Double newY = car.getCoordinates().getY() + (velocityY*timeDifferential) + (.5*car.getAcceleration()*timeDifferential*timeDifferential);
         LogicCoordinates newLocation = new LogicCoordinates(newX, newY);
 
-        //set all the pertinent fields
+        //update for the next timecycle
         car.setCoordinates(newLocation);
+        if(nearestNeighbor == null) {
+            car.setAcceleration(car.getDriver().getDesiredAcceleration(car.getVelocity()));
+        } else {
+            car.setAcceleration(car.getDriver().getDesiredAcceleration(nearestNeighbor, car.getVelocity()));
+        }
         car.setVelocity(car.getVelocity() + (car.getAcceleration() * timeDifferential));
         car.setTime(nextTime);
     }
