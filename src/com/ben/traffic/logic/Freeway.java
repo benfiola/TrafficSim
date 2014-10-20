@@ -64,6 +64,19 @@ public class Freeway {
             Double centerX = ((x * Lane.WIDTH) + (Lane.WIDTH/2.0));
             this.lanes.add(new Lane(new LogicCoordinates(centerX, 0.0), new LogicCoordinates(centerX, this.length)));
         }
+        for(int x = 0; x < this.lanes.size(); x++) {
+            Lane leftLane;
+            Lane rightLane;
+            Lane currLane = this.lanes.get(x);
+            if( (x-1) > 0) {
+                leftLane = this.lanes.get(x-1);
+                currLane.setLeftLane(leftLane);
+            }
+            if(x+1 < this.lanes.size()) {
+                rightLane = this.lanes.get(x+1);
+                currLane.setRightLane(rightLane);
+            }
+        }
     }
 
     /*
@@ -95,9 +108,15 @@ public class Freeway {
                     ArrayList<Car> toRemove = new ArrayList<Car>();
                     for(int i = 0; i < cars.size(); i++) {
                     	Car car = cars.get(i);
-                    	controller.updateTrajectory(car, new Date().getTime(), neighborLinkedList.findNearestFrontNeighbor(car, car.getDriver().getLookaheadDistance(car.getVelocity())));
-                        //car.calculateTrajectory(new Date().getTime());
+                    	controller.updateTrajectory(car, new Date().getTime(),
+                                neighborLinkedList.findNearestNeighbors(car, car.getDriver().getLookaheadDistance(car.getVelocity()), car.getLane()),
+                                neighborLinkedList.findNearestNeighbors(car, car.getDriver().getLookaheadDistance(car.getVelocity()) + car.getLane().WIDTH, car.getLane().getLeftLane()),
+                                neighborLinkedList.findNearestNeighbors(car, car.getDriver().getLookaheadDistance(car.getVelocity()) + car.getLane().WIDTH, car.getLane().getRightLane()));
                         if (isCarOutOfBounds(car)) {
+                            //cars aren't removed until after we've calculated the trajectories for all cars -
+                            //we can't modify this list right now, but we need a way to flag a car so that we know it will be removed
+                            //so that's what this flag is.  other trajectory calculations will ignore this car.
+                            car.setToRemove(true);
                             toRemove.add(car);
                         }
                     }
@@ -108,8 +127,9 @@ public class Freeway {
     }
 
     private boolean isCarOutOfBounds(Car c){
-        return false;
-    	//return c.getCoordinates().getY() < this.getLength();
+        Double carYCoords = c.getCoordinates().getY();
+        Double laneYCoords = c.getLane().getEndCoordinates().getY();
+        return carYCoords >= laneYCoords;
     }
 
     public void stopSimulation(){

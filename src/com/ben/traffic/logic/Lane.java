@@ -15,6 +15,8 @@ public class Lane {
 
     private LogicCoordinates startCoordinates;
     private LogicCoordinates endCoordinates;
+    private Lane left;
+    private Lane right;
     public static Integer WIDTH = 10; //feet
 
     public Lane(LogicCoordinates start, LogicCoordinates end) {
@@ -22,6 +24,15 @@ public class Lane {
         this.endCoordinates = end;
     }
 
+    public LogicCoordinates getDestinationCoordinates(LogicCoordinates currPos, Double heading) {
+        double forwardDistance = Math.tan(Math.toRadians(heading)) * Lane.WIDTH;
+        return new LogicCoordinates(this.getStartCoordinates().getX(), currPos.getY() + forwardDistance);
+    }
+
     public LogicCoordinates getStartCoordinates() { return this.startCoordinates; }
     public LogicCoordinates getEndCoordinates() { return this.endCoordinates; }
+    public void setLeftLane(Lane l) { this.left = l; }
+    public Lane getLeftLane() { return this.left; }
+    public void setRightLane(Lane l) { this.right = l; }
+    public Lane getRightLane() { return this.right; }
 }

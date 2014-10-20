@@ -1,6 +1,7 @@
 package com.ben.traffic.structures;
 
 import com.ben.traffic.logic.Car;
+import com.ben.traffic.logic.Lane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,28 +141,31 @@ public class CarLinkedList {
         return false;
     }
 
-    public Car findNearestFrontNeighbor(Car c, double maximumDistance) {
-        CarLinkedListNode curr = this.nodeMap.get(c).getNext();
-        double currDistance;
-        if(curr == null) {
-            currDistance = maximumDistance + 1;
-        } else {
-            currDistance = c.getDistance(curr.getValue());
-        }
-        while(curr != null && currDistance <= maximumDistance) {
-            if(curr.getValue().getLane().equals(c.getLane())) {
-                return curr.getValue();
+    public Car findNearestNeighbors(Car c, double maximumDistance, Lane laneToSearch) {
+        if(laneToSearch != null) {
+            CarLinkedListNode curr = this.nodeMap.get(c).getNext();
+            double currDistance;
+            if (curr == null) {
+                currDistance = maximumDistance + 1;
             } else {
-                curr = curr.getNext();
-                if(curr == null) {
-                    currDistance = maximumDistance + 1;
+                currDistance = c.getDistance(curr.getValue());
+            }
+            while (curr != null && currDistance <= maximumDistance) {
+                if (!curr.getValue().willBeRemoved() && curr.getValue().getLane().equals(laneToSearch)) {
+                    return curr.getValue();
                 } else {
-                    currDistance = c.getDistance(curr.getValue());
+                    curr = curr.getNext();
+                    if (curr == null) {
+                        currDistance = maximumDistance + 1;
+                    } else {
+                        currDistance = c.getDistance(curr.getValue());
+                    }
                 }
             }
         }
         return null;
     }
+
 
     public void print(){
         CarLinkedListNode curr = this.head;

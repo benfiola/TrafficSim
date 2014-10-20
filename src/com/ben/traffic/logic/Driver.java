@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import com.ben.traffic.converters.AccelerationConverter;
 
+import java.util.Random;
+
 /**
  * Created by Ben on 10/12/2014.
  *
@@ -20,6 +22,11 @@ public class Driver {
     public Driver(Double desiredVelocity, Double aggression) {
         this.desiredVelocity = desiredVelocity;
         this.aggression = aggression;
+    }
+
+    public boolean wantsToSwitchLanes(Double currentVelocity) {
+        Double normalizedVelocity = this.desiredVelocity * this.aggression;
+        return currentVelocity <= normalizedVelocity;
     }
 
     public Double getDesiredAcceleration(Double currentVelocity){
