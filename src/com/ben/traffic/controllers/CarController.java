@@ -26,9 +26,6 @@ public class CarController {
 
         //should we be braking?
         if(nearestNeighbor != null && nearestNeighbor.getVelocity() <= car.getVelocity()) {
-            LOG.debug(nearestNeighbor.getVelocity());
-            LOG.debug(car.getVelocity());
-
             //how far do we typically look ahead to brake safely?
             Double lookaheadDistance = car.getDriver().getLookaheadDistance(car.getVelocity());
 

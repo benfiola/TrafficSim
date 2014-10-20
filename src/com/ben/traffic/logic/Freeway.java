@@ -80,6 +80,11 @@ public class Freeway {
             simulationTimer = new Timer();
             simulationTimer.schedule(new TimerTask() {
                 public void run() {
+
+                    //I'm under the impression that having to update our linked list at every time step could be pretty complicated as it requires us to figure out whether a car in a particular position
+                    //has been eclipsed by potentially many other drivers.  What I figure might be an easy implementation for now is to sort our list of cars once with every timestep by their y coordinates
+                    //and rebuild our linked list.  This then means that we're dealing with O(n^2 log n) in terms of time complexity for every time step, but then linked list accesses will be constant time
+                    //since we've backed our linked list with a hashmap thus removing our need to iterate through the linked list every time we want to get a car's relative neighbors.
                     Collections.sort(cars, new Comparator<Car>() {
                         @Override
                         public int compare(Car o1, Car o2) {

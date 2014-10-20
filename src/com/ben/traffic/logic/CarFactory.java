@@ -23,9 +23,9 @@ public class CarFactory {
 
     /*is this 10mph?*/
     private Driver[] drivers = {new Driver(VelocityConverter.milesph(10.0), 0.2),
-    		new Driver(VelocityConverter.milesph(15.0), 0.2),
-    		new Driver(VelocityConverter.milesph(20.0), 0.2),
-    		new Driver(VelocityConverter.milesph(25.0), 0.2)
+    		new Driver(VelocityConverter.milesph(15.0), 0.4),
+    		new Driver(VelocityConverter.milesph(20.0), 0.6),
+    		new Driver(VelocityConverter.milesph(25.0), 0.7)
     };
 
     public CarFactory(List<Lane> lanes) {
@@ -35,8 +35,7 @@ public class CarFactory {
     /*spawns a random car into a random lane*/
     public Car spawnCar() {
         Random rand = new Random();
-        //Lane randomLane = lanes.get(rand.nextInt(lanes.size()));
-        Lane randomLane = lanes.get(0);
+        Lane randomLane = lanes.get(rand.nextInt(lanes.size()));
         Color randomColor = colors[rand.nextInt(colors.length)];
         Driver randomDriver = drivers[rand.nextInt(drivers.length)];
         Car toReturn = new Car(randomDriver, randomLane, randomColor);
