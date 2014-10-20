@@ -22,10 +22,10 @@ public class CarFactory {
     private Color[] colors = {Color.BLUE, Color.GREEN, Color.CYAN, Color.GRAY, Color.ORANGE};
 
     /*is this 10mph?*/
-    private Driver[] drivers = {new Driver(VelocityConverter.milesph(10.0), 0.2),
-    		new Driver(VelocityConverter.milesph(15.0), 0.2),
-    		new Driver(VelocityConverter.milesph(20.0), 0.2),
-    		new Driver(VelocityConverter.milesph(25.0), 0.2)
+    private Driver[] drivers = {new Driver(VelocityConverter.milesph(15.0), 0.2),
+    		new Driver(VelocityConverter.milesph(15.0), 0.4),
+    		new Driver(VelocityConverter.milesph(20.0), 0.6),
+    		new Driver(VelocityConverter.milesph(45.0), 0.7)
     };
 
     public CarFactory(List<Lane> lanes) {
